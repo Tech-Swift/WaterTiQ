@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 
 //routes used
 const userRoutes = require('./routes/userRoutes');
+const propertyRoutes = require('./routes/propertyRoutes')
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 //all routes
 app.use('/api/users', userRoutes);
+app.use('/api/property', propertyRoutes);
 
 //connect a listen to db
 const PORT = process.env.PORT || 5000;
