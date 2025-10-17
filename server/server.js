@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
 //routes used
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const propertyRoutes = require('./routes/propertyRoutes')
 
@@ -19,6 +20,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
+//auth route
+app.use('/api/auth', authRoutes)
 //all routes
 app.use('/api/users', userRoutes);
 app.use('/api/property', propertyRoutes);
