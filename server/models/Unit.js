@@ -3,18 +3,16 @@ const Property = require('./Property');
 
 const unitSchema = new mongoose.Schema(
   {
-    propertyId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Property',
-      required: true, 
-    },
-
     unitNumber: {
       type: String,
       required: true,
       trim: true, 
     },
-
+    propertyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Property',
+      required: true, 
+    },
     tenantId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -33,18 +31,6 @@ const unitSchema = new mongoose.Schema(
   },
   { timestamps: true } 
 );
-
-//Middleware: after saving a unit, automatically push its _id to the property
-unitSchema.post('save', async function(doc, next) {
-  try {
-    await Property.findByIdAndUpdate(doc.propertyId, {
-      $addToSet: { units: doc._id }, // prevents duplicates
-    });
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
 
 const Unit = mongoose.model('Unit', unitSchema);
 

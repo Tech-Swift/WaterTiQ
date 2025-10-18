@@ -7,7 +7,8 @@ const connectDB = require('./config/db');
 //routes used
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
-const propertyRoutes = require('./routes/propertyRoutes')
+const propertyRoutes = require('./routes/propertyRoutes');
+const unitRoutes = require('./routes/unitRoutes');
 
 dotenv.config();
 
@@ -24,7 +25,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes)
 //all routes
 app.use('/api/users', userRoutes);
-app.use('/api/property', propertyRoutes);
+app.use('/api/properties', propertyRoutes);
+app.use('/api/units', unitRoutes);
 
 //connect a listen to db
 const PORT = process.env.PORT || 5000;

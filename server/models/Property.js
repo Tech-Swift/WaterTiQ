@@ -7,7 +7,7 @@ const propertySchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    address: {
+    location: {
         type : String,
         required : true,
         trim: true
@@ -15,10 +15,8 @@ const propertySchema = new mongoose.Schema({
     landlordId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: function(){
-            return this.userRole === 'landlord';
-        }
-    },
+        required: true
+        },
     units: [
         {
             type: mongoose.Schema.Types.ObjectId,
