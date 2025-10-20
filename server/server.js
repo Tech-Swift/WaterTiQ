@@ -14,6 +14,8 @@ const unitRoutes = require('./routes/unitRoutes');
 const meterRoutes = require('./routes/meterRoutes');
 const readingRoutes = require('./routes/readingRoutes');
 const readingAnalyticsRoutes = require('./routes/readingAnalyticsRoutes');
+const consumptionSummaryRoutes = require('./routes/consumptionSummaryRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 
 dotenv.config();
@@ -49,6 +51,9 @@ app.use('/api/units', unitRoutes);
 app.use('/api/meters', meterRoutes);
 app.use('/api/readings', readingRoutes);
 app.use('/api/analytics/readings', readingAnalyticsRoutes);
+app.use('/api/consumption-summary', consumptionSummaryRoutes);
+app.use('/api/reports', reportRoutes);
+
 
 
 //connect a listen to db
