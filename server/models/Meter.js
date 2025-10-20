@@ -8,12 +8,16 @@ const meterSchema = new mongoose.Schema(
       ref: 'Unit', // links the meter to a specific unit
       required: true,
     },
-
-    meterSerial: {
+    propertyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref : 'Property',
+      required: true
+    },
+    meterNumber: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
+      trim: true, 
     },
 
     type: {
@@ -40,18 +44,6 @@ const meterSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-//Middleware: After saving a meter, add its _id to the parent Unit
-meterSchema.post('save', async function (doc, next) {
-  try {
-    await Unit.findByIdAndUpdate(doc.unitId, {
-      $addToSet: { meterId: doc._id },
-    });
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
 
 const Meter = mongoose.model('Meter', meterSchema);
 
