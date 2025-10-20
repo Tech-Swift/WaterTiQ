@@ -1,19 +1,26 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
+const watchReadings = require('../sockets/watchReadings');
 
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected')
-    } catch (error){
-     console.error('MongoDB connection failed: ', error.message);
-     process.exit(1);
+const connectDB = async (io) => {
+  try {
+    // Connect to MongoDB (no need for deprecated options)
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log('✅ MongoDB connected');
+
+    // Start change stream watcher (real-time updates)
+    if (io) {
+      console.log('👀 Watching Reading collection for changes...');
+      watchReadings(io, mongoose);
+    } else {
+      console.warn('⚠️ io not provided, skipping watcher setup');
     }
+
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error.message);
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;
-
-//commonjs use common to import the modules while the modern is using the import 
